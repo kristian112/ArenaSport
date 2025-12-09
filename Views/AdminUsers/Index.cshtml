@@ -1,0 +1,29 @@
+﻿@model List<ArenaSportProj.Models.ApplicationUser>
+
+<div class="container py-4">
+    <h3 class="fw-bold text-danger mb-3">Потребители</h3>
+
+    <table class="table table-bordered bg-white">
+        <tr class="bg-danger text-white">
+            <th>Имейл</th>
+            <th>Телефон</th>
+            <th>Действия</th>
+        </tr>
+
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.Email</td>
+                <td>@u.PhoneNumber</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@u.Id" class="btn btn-sm btn-dark">Детайли</a>
+                    <a asp-action="Edit" asp-route-id="@u.Id" class="btn btn-sm btn-dark">Редактирай</a>
+                    <a asp-action="Delete" asp-route-id="@u.Id" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Сигурен ли си?');">
+                        Изтрий
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

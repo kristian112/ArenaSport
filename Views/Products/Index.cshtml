@@ -1,0 +1,128 @@
+﻿@model List<ArenaSportProj.Models.Product>
+@using ArenaSportProj.Models
+
+<div class="container py-4">
+    <h2 class="fw-bold text-danger mb-4">Екипировка</h2>
+
+    <!-- FILTER + SORT FORM -->
+    <form method="get" class="row g-3 mb-4">
+
+        <!-- Категории (спортове) -->
+        <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="">Всички спортове</option>
+                @foreach (var cat in ViewBag.Categories as List<string>)
+                {
+                    if (ViewBag.CurrentCategory as string == cat)
+                    {
+                        <option value="@cat" selected>@cat</option>
+                    }
+                    else
+                    {
+                        <option value="@cat">@cat</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <!-- Марки -->
+        <div class="col-md-3">
+            <select name="brand" class="form-select">
+                <option value="">Всички марки</option>
+                @foreach (var b in ViewBag.Brands as List<string>)
+                {
+                    if (ViewBag.CurrentBrand as string == b)
+                    {
+                        <option value="@b" selected>@b</option>
+                    }
+                    else
+                    {
+                        <option value="@b">@b</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <!-- Цена от -->
+        <div class="col-md-2">
+            <input type="number" name="minPrice" placeholder="Мин. Цена"
+                   class="form-control" value="@ViewBag.MinPrice" />
+        </div>
+
+        <!-- Цена до -->
+        <div class="col-md-2">
+            <input type="number" name="maxPrice" placeholder="Макс. Цена"
+                   class="form-control" value="@ViewBag.MaxPrice" />
+        </div>
+
+        <!-- Submit бутон -->
+        <div class="col-md-3 d-grid">
+            <button type="submit" class="btn btn-danger">Филтрирай</button>
+        </div>
+
+        <!-- SORT DROPDOWN -->
+        <div class="col-12">
+            <select name="sort" class="form-select w-auto" onchange="this.form.submit()">
+                <option value="">Сортирай</option>
+
+                @if (ViewBag.Sort == "price_asc")
+                {
+                    <option value="price_asc" selected>Цена ↑</option>
+                }
+                else
+                {
+                    <option value="price_asc">Цена ↑</option>
+                }
+
+                @if (ViewBag.Sort == "price_desc")
+                {
+                    <option value="price_desc" selected>Цена ↓</option>
+                }
+                else
+                {
+                    <option value="price_desc">Цена ↓</option>
+                }
+
+                @if (ViewBag.Sort == "name_asc")
+                {
+                    <option value="name_asc" selected>Име ↑</option>
+                }
+                else
+                {
+                    <option value="name_asc">Име ↑</option>
+                }
+
+                @if (ViewBag.Sort == "name_desc")
+                {
+                    <option value="name_desc" selected>Име ↓</option>
+                }
+                else
+                {
+                    <option value="name_desc">Име ↓</option>
+                }
+            </select>
+
+        </div>
+
+    </form>
+
+
+
+
+    <div class="row row-cols-1 row-cols-md-4 g-3">
+        @foreach (var p in Model)
+        {
+            <div class="col">
+                <div class="card shadow-sm p-2 rounded-4">
+                    <img src="@p.ImageUrl" class="card-img-top rounded">
+                    <div class="card-body">
+                        <h6 class="fw-bold">@p.Name</h6>
+                        <p class="small text-muted">@p.Brand</p>
+                        <p class="fw-bold">@p.Price лв</p>
+                        <a href="/Products/Details/@p.Id" class="btn btn-sm btn-outline-danger">Детайли</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

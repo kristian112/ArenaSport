@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "FightShop";
+}
+@model List<ArenaSportProj.Models.Product>
+
+<div class="hero-section"
+     style="background: url('https://res.cloudinary.com/daiw6lh6i/image/upload/v1764979375/hero_vfgw99.jpg') center/cover no-repeat;
+            height: 55vh; display:flex; align-items:center; justify-content:center;">
+
+    <div class="bg-dark bg-opacity-50 p-4 rounded-4 text-center text-white">
+        <h1 class="fw-bold display-4">Arena Sport</h1>
+        <p class="fs-5">Екипировка за бойни спортове • Бокс • ММА • Кикбокс</p>
+    </div>
+</div>
+
+
+<section class="container mt-5">
+    <h2 class="text-xl fw-bold text-center mb-4">Защо да изберете нас?</h2>
+    <div class="row text-center">
+        <div class="col-md-3">
+            <i class="bi bi-trophy fs-1"></i>
+            <h5 class="fw-bold mt-2">Топ Брандове</h5>
+            <p class="text-muted">Само най-високо качество</p>
+        </div>
+        <div class="col-md-3">
+            <i class="bi bi-lightning fs-1"></i>
+            <h5 class="fw-bold mt-2">Достъпни Цени</h5>
+            <p class="text-muted">Най добрите цени на пазара</p>
+        </div>
+        <div class="col-md-3">
+            <i class="bi bi-shield-check fs-1"></i>
+            <h5 class="fw-bold mt-2">Безопастност на данните</h5>
+            <p class="text-muted">Сигурни поръчки</p>
+        </div>
+        <div class="col-md-3">
+            <i class="bi bi-shield-check fs-1"></i>
+            <h5 class="fw-bold mt-2">Бързи доставки</h5>
+            <p class="text-muted">Доставка в цяла България до 3 дни</p>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <h2 class="fw-bold text-center text-danger mb-4">Топ продукти</h2>
+
+    <div class="row justify-content-center g-4">
+        @foreach (var p in Model)
+        {
+            <div class="col-md-4">
+                <div class="card shadow-sm rounded-4 border-0 p-3 text-center">
+
+                    <img src="@p.ImageUrl"
+                         onerror="this.src='https://placehold.co/300x200?text=Без+снимка';"
+                         class="img-fluid rounded-3 mb-3"
+                         style="height:200px; object-fit:cover;" />
+
+                    <h5 class="fw-bold">@p.Name</h5>
+                    <p class="text-muted">@p.Brand</p>
+
+                    <p class="fw-bold fs-5">@p.Price лв.</p>
+
+                    <a asp-controller="Products"
+                       asp-action="Details"
+                       asp-route-id="@p.Id"
+                       class="btn btn-danger rounded-3 mt-2">
+                        Виж продукта
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

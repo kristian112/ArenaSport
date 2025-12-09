@@ -1,0 +1,30 @@
+﻿@model List<ArenaSportProj.Models.Order>
+
+<div class="container py-4">
+    <h3 class="fw-bold text-danger mb-3">Поръчки</h3>
+    <a asp-action="Create" class="btn btn-danger mb-3 rounded-3">Добави поръчка</a>
+
+    <table class="table table-bordered bg-white">
+        <tr class="bg-danger text-white">
+            <th>ID</th>
+            <th>Потребител</th>
+            <th>Дата</th>
+            <th>Обща сума</th>
+            <th>Действия</th>
+        </tr>
+
+        @foreach (var o in Model)
+        {
+            <tr>
+                <td>@o.Id</td>
+                <td>@o.UserId</td>
+                <td>@o.CreatedOn.ToLocalTime()</td>
+                <td>@o.TotalPrice лв.</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@o.Id" class="btn btn-sm btn-dark">Детайли</a>
+                    <a asp-action="Delete" asp-route-id="@o.Id" class="btn btn-sm btn-danger">Изтрий</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

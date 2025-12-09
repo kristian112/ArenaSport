@@ -1,0 +1,35 @@
+﻿@model List<ArenaSportProj.Models.Order>
+
+<div class="container py-4">
+    <h2 class="fw-bold text-danger mb-4">Моите поръчки</h2>
+
+    @if (!Model.Any())
+    {
+        <p class="text-muted">Все още нямаш поръчки.</p>
+    }
+    else
+    {
+        @foreach (var o in Model)
+        {
+            <div class="card shadow-sm rounded-4 p-3 mb-3">
+                <h5 class="fw-bold">Поръчка #@o.Id</h5>
+                <p class="small text-muted">@o.CreatedOn.ToLocalTime()</p>
+                <p>Адрес: @o.Address</p>
+                <p>Телефон: @o.PhoneNumber</p>
+                <p>Плащане: @o.PaymentMethod</p>
+                <p class="fw-bold fs-5">Общо: @o.TotalPrice лв.</p>
+
+                <hr />
+                <ul class="list-group">
+                    @foreach (var i in o.Items)
+                    {
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>@i.Product.Name × @i.Quantity</span>
+                            <span class="fw-semibold">@i.UnitPrice лв.</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    }
+</div>

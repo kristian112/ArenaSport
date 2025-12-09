@@ -1,0 +1,28 @@
+﻿@model ArenaSportProj.Models.ViewModels.CheckoutViewModel
+
+<div class="container py-4">
+    <h2 class="text-2xl fw-bold mb-3">Детайли</h2>
+
+    <form method="post" class="card p-4 shadow-sm rounded-4">
+        <div class="mb-3">
+            <label class="form-label">Адрес</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Телефон</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Payment</label>
+            <select asp-for="PaymentMethod" class="form-select">
+                <option>Наложен платеж</option>
+            </select>
+        </div>
+
+        <button class="btn btn-danger w-100">Поръчай</button>
+    </form>
+</div>

@@ -1,0 +1,14 @@
+﻿@model ArenaSportProj.Models.ApplicationUser
+
+<div class="container py-5">
+    <h3 class="fw-bold text-danger mb-3">Детайли за потребител</h3>
+
+    <div class="card p-4 shadow-sm rounded-4 border-0 mb-3">
+        <p><strong>Имейл:</strong> @Model.Email</p>
+        <p><strong>Телефон:</strong> @Model.PhoneNumber</p>
+        <p><strong>User ID:</strong> @Model.Id</p>
+    </div>
+
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-danger">Редактирай</a>
+    <button class="btn btn-dark text-danger" onclick="history.back()">Назад</button>
+</div>

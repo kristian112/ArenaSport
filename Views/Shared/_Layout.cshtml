@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - АренаСпорт</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger px-4">
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">АренаСпорт</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto">
+                    <li><a class="nav-link" asp-controller="Home" asp-action="Index">Начало</a></li>
+                    <li><a class="nav-link" asp-controller="Products" asp-action="Index">Продукти</a></li>
+                    <li><a class="nav-link" asp-controller="Home" asp-action="Contacts">Контакти</a></li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li><a class="nav-link text-white fw-bold" asp-controller="Admin" asp-action="Index">Администриране</a></li>
+                    }
+                </ul>
+
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
+
+                    @if (!User.Identity!.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Влизане</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+                        </li>
+                    }
+
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="UserOrders" asp-action="Index">📦 Поръчки</a>
+                        </li>
+                        <!-- Logged user -->
+                        <li><a class="nav-link" asp-controller="Cart" asp-action="Index">🛒 Количка</a></li>
+                        <li>
+                            <form method="post" asp-area="Identity" asp-page="/Account/Logout">
+                                <button class="btn btn-sm btn-dark ms-2">Изход</button>
+                            </form>
+                        </li>
+                        
+                    }
+
+                </ul>
+            </div>
+        </nav>
+
+    </header>
+
+    <main class="container mt-4">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-dark text-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">АренаСпорт - от всичкото най доброто!1!1  Всички права запазени!1!1!.</p>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

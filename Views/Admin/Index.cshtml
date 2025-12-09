@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Администриране";
+}
+
+<div class="container py-5 text-center">
+    <h2 class="fw-bold text-danger mb-4">Админ табло</h2>
+
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-3">
+            <a asp-controller="Categories" asp-action="Index" class="btn btn-danger w-100 rounded-4 p-3">
+                🥊 Управление на спортове
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-controller="AdminProducts" asp-action="Index" class="btn btn-danger w-100 rounded-4 p-3">
+                🛍️ Управление на стоки
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-controller="Orders" asp-action="Index" class="btn btn-danger w-100 rounded-4 p-3">
+                📦 Управление на поръчки
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-controller="AdminUsers" asp-action="Index" class="btn btn-dark text-danger w-100 rounded-4 p-3">
+                👤 Управление на акаунти
+            </a>
+        </div>
+    </div>
+</div>
