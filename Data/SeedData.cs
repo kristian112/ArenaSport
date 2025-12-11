@@ -26,7 +26,7 @@ public static class SeedData
         }
 
         // 2) Seed Admin user
-        var adminEmail = "admin@fightshop.local";
+        var adminEmail = "admin@mail.com";
         var admin = await userManager.FindByEmailAsync(adminEmail);
         if (admin == null)
         {
