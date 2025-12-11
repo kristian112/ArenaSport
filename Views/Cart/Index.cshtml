@@ -10,17 +10,39 @@
     else
     {
         <div class="list-group mb-3">
-            @foreach (var i in Model)
+            @foreach (var item in Model)
             {
                 <div class="list-group-item d-flex justify-content-between align-items-center rounded-3 shadow-sm p-3 mb-2">
                     <div>
-                        <h6 class="fw-bold">@i.Product.Name</h6>
-                        <small>Цена: @i.Product.Price лв. × @i.Quantity</small>
+                        <h6 class="fw-bold">@item.Product.Name</h6>
+
+                        <form method="post" asp-action="UpdateQuantity" class="d-inline">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+
+                            <select name="quantity" class="form-select d-inline w-auto" onchange="this.form.submit()">
+                                @for (int q = 1; q <= 10; q++)
+                                {
+                                    <option value="@q" selected="@(item.Quantity == q)">
+                                        @q
+                                    </option>
+                                }
+                            </select>
+
+                        </form>
+
+                        <small>Цена: @item.Product.Price лв. × @item.Quantity</small>
                     </div>
-                    <a asp-action="Remove" asp-route-productId="@i.ProductId" class="btn btn-sm btn-outline-danger">Изтрий</a>
+
+                    <form method="post" asp-action="Remove" asp-route-id="@item.Id" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            Изтрий
+                        </button>
+                    </form>
+
                 </div>
             }
         </div>
+
 
         <h4 class="fw-bold">Общо: @ViewBag.Total лв.</h4>
         <a asp-action="Checkout" class="btn btn-danger mt-3">Поръчай</a>

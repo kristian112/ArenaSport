@@ -7,20 +7,43 @@
         <h3 class="fw-bold text-center text-danger mb-3">Регистрация</h3>
 
         <form method="post">
-            <div class="mb-2">
-                <input asp-for="Input.Email" class="form-control rounded-3" placeholder="Имейл" />
-                <span asp-validation-for="Input.Email" class="text-danger small"></span>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.FirstName" class="form-control" placeholder="Име" />
+                <label asp-for="Input.FirstName">Име</label>
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
 
-            <div class="mb-2">
-                <input asp-for="Input.Password" class="form-control rounded-3" placeholder="Парола" type="password" />
-                <span asp-validation-for="Input.Password" class="text-danger small"></span>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control" placeholder="Фамилия" />
+                <label asp-for="Input.LastName">Фамилия</label>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
 
-            <div class="mb-2">
-                <input asp-for="Input.ConfirmPassword" class="form-control rounded-3" placeholder="Потвърди парола" type="password" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Телефон" />
+                <label asp-for="Input.PhoneNumber">Телефон</label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" placeholder="Имейл" />
+                <label asp-for="Input.Email">Имейл</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" placeholder="Парола" />
+                <label asp-for="Input.Password">Парола</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Потвърди парола" />
+                <label asp-for="Input.ConfirmPassword">Потвърди парола</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
 
             <button type="submit" class="btn btn-danger w-100 mt-2 rounded-3">Създай профил</button>
         </form>

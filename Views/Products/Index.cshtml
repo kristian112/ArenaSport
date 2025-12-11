@@ -1,128 +1,159 @@
-﻿@model List<ArenaSportProj.Models.Product>
-@using ArenaSportProj.Models
+﻿@model IEnumerable<ArenaSportProj.Models.Product>
 
 <div class="container py-4">
-    <h2 class="fw-bold text-danger mb-4">Екипировка</h2>
-
-    <!-- FILTER + SORT FORM -->
-    <form method="get" class="row g-3 mb-4">
-
-        <!-- Категории (спортове) -->
+    <div class="row">
+        <!-- ЛЯВ САЙДБАР -->
         <div class="col-md-3">
-            <select name="category" class="form-select">
-                <option value="">Всички спортове</option>
-                @foreach (var cat in ViewBag.Categories as List<string>)
-                {
-                    if (ViewBag.CurrentCategory as string == cat)
-                    {
-                        <option value="@cat" selected>@cat</option>
-                    }
-                    else
-                    {
-                        <option value="@cat">@cat</option>
-                    }
-                }
-            </select>
-        </div>
+            <!-- ФИЛТРИ -->
+            <div class="mb-4">
+                <h5 class="fw-bold text-danger mb-3">Филтри</h5>
 
-        <!-- Марки -->
-        <div class="col-md-3">
-            <select name="brand" class="form-select">
-                <option value="">Всички марки</option>
-                @foreach (var b in ViewBag.Brands as List<string>)
-                {
-                    if (ViewBag.CurrentBrand as string == b)
-                    {
-                        <option value="@b" selected>@b</option>
-                    }
-                    else
-                    {
-                        <option value="@b">@b</option>
-                    }
-                }
-            </select>
-        </div>
-
-        <!-- Цена от -->
-        <div class="col-md-2">
-            <input type="number" name="minPrice" placeholder="Мин. Цена"
-                   class="form-control" value="@ViewBag.MinPrice" />
-        </div>
-
-        <!-- Цена до -->
-        <div class="col-md-2">
-            <input type="number" name="maxPrice" placeholder="Макс. Цена"
-                   class="form-control" value="@ViewBag.MaxPrice" />
-        </div>
-
-        <!-- Submit бутон -->
-        <div class="col-md-3 d-grid">
-            <button type="submit" class="btn btn-danger">Филтрирай</button>
-        </div>
-
-        <!-- SORT DROPDOWN -->
-        <div class="col-12">
-            <select name="sort" class="form-select w-auto" onchange="this.form.submit()">
-                <option value="">Сортирай</option>
-
-                @if (ViewBag.Sort == "price_asc")
-                {
-                    <option value="price_asc" selected>Цена ↑</option>
-                }
-                else
-                {
-                    <option value="price_asc">Цена ↑</option>
-                }
-
-                @if (ViewBag.Sort == "price_desc")
-                {
-                    <option value="price_desc" selected>Цена ↓</option>
-                }
-                else
-                {
-                    <option value="price_desc">Цена ↓</option>
-                }
-
-                @if (ViewBag.Sort == "name_asc")
-                {
-                    <option value="name_asc" selected>Име ↑</option>
-                }
-                else
-                {
-                    <option value="name_asc">Име ↑</option>
-                }
-
-                @if (ViewBag.Sort == "name_desc")
-                {
-                    <option value="name_desc" selected>Име ↓</option>
-                }
-                else
-                {
-                    <option value="name_desc">Име ↓</option>
-                }
-            </select>
-
-        </div>
-
-    </form>
-
-
-
-
-    <div class="row row-cols-1 row-cols-md-4 g-3">
-        @foreach (var p in Model)
-        {
-            <div class="col">
-                <div class="card shadow-sm p-2 rounded-4">
-                    <img src="@p.ImageUrl" class="card-img-top rounded">
-                    <div class="card-body">
-                        <h6 class="fw-bold">@p.Name</h6>
-                        <p class="small text-muted">@p.Brand</p>
-                        <p class="fw-bold">@p.Price лв</p>
-                        <a href="/Products/Details/@p.Id" class="btn btn-sm btn-outline-danger">Детайли</a>
+                <form method="get">
+                    <!-- Търсене -->
+                    <div class="mb-2">
+                        <input type="text"
+                               name="search"
+                               value="@ViewBag.Search"
+                               class="form-control"
+                               placeholder="Търси име или марка..." />
                     </div>
-                </div>
+
+                    <!-- Категория -->
+                    <div class="mb-2">
+                        <select name="category" class="form-select">
+                            <option value="">Всички спортове</option>
+                            @foreach (var c in (IEnumerable<string>)ViewBag.Categories)
+                            {
+                                <option value="@c" selected="@(ViewBag.CurrentCategory == c)">
+                                    @c
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Марка -->
+                    <div class="mb-2">
+                        <select name="brand" class="form-select">
+                            <option value="">Всички марки</option>
+                            @foreach (var b in (IEnumerable<string>)ViewBag.Brands)
+                            {
+                                <option value="@b" selected="@(ViewBag.CurrentBrand == b)">
+                                    @b
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Цена от / до -->
+                    <div class="mb-2 d-flex">
+                        <input type="number" step="1" min="0"
+                               name="minPrice"
+                               value="@ViewBag.MinPrice"
+                               class="form-control me-2"
+                               placeholder="Мин. цена" />
+
+                        <input type="number" step="1" min="0"
+                               name="maxPrice"
+                               value="@(ViewBag.MaxPrice ?? string.Empty)"
+                               class="form-control"
+                               placeholder="Макс. цена" />
+                    </div>
+
+                    <!-- Бутон -->
+                    <button type="submit" class="btn btn-danger w-100 mt-2">
+                        Приложи филтри
+                    </button>
+                </form>
             </div>
-        }
-    </div>
-</div>
+
+            <!-- МАРКИ (GroupBy резултат) -->
+            <div class="mb-4">
+                <h6 class="fw-bold text-danger mb-2">Марки</h6>
+
+                <ul class="list-unstyled small">
+                    @foreach (var b in ViewBag.BrandCounts)
+                    {
+                        <li class="d-flex justify-content-between align-items-center mb-1">
+                            <a asp-action="Index"
+                               asp-route-brand="@b.Brand"
+                               class="text-decoration-none text-dark">
+                                @b.Brand
+                            </a>
+                            <span class="badge bg-danger">@b.Count</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- ДЯСНА ЧАСТ – продукти -->
+        <div class="col-md-9">
+
+            <!-- Сортиране -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">Продукти</h5>
+
+                <form method="get" class="d-flex">
+                    <input type="hidden" name="search" value="@ViewBag.Search" />
+                    <input type="hidden" name="category" value="@ViewBag.CurrentCategory" />
+                    <input type="hidden" name="brand" value="@ViewBag.CurrentBrand" />
+                    <input type="hidden" name="minPrice" value="@(ViewBag.MinPrice ?? string.Empty)" />
+                    <input type="hidden" name="maxPrice" value="@(ViewBag.MaxPrice ?? string.Empty)" />
+
+
+                    <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <option value="">Подразбиране</option>
+                        <option value="price_asc" selected="@(ViewBag.Sort == "price_asc")">Цена ↑</option>
+                        <option value="price_desc" selected="@(ViewBag.Sort == "price_desc")">Цена ↓</option>
+                        <option value="name_asc" selected="@(ViewBag.Sort == "name_asc")">Име A→Я</option>
+                        <option value="name_desc" selected="@(ViewBag.Sort == "name_desc")">Име Я→A</option>
+                    </select>
+                </form>
+            </div>
+            <!-- КАРТИ С ПРОДУКТИ -->
+            <div class="row g-4">
+                @if (!Model.Any())
+                {
+                    <div class="col-12">
+                        <p>Няма намерени продукти по зададените критерии.</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var p in Model)
+                    {
+                        <div class="col-md-4">
+                            <div class="card h-100 rounded-3 border-0 shadow-sm">
+                                <img src="@p.ImageUrl"
+                                     class="card-img-top"
+                                     style="height:200px; object-fit:cover;"
+                                     onerror="this.src='https://placehold.co/300x200?text=Без+снимка';" />
+
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="fw-bold">@p.Name</h6>
+                                    <p class="text-muted small mb-1">@p.Brand</p>
+                                    <p class="small text-muted mb-2">@p.Category?.Name</p>
+
+                                    <p class="fw-bold fs-6 mb-3">@p.Price лв.</p>
+
+                                    <div class="mt-auto">
+                                        <a asp-action="Details" asp-route-id="@p.Id"
+                                           class="btn btn-sm btn-outline-dark w-100 mb-2">
+                                            Детайли
+                                        </a>
+                                        <form method="post" asp-controller="Cart" asp-action="Add" class="d-grid">
+                                            <input type="hidden" name="productId" value="@p.Id" />
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                Добави в количката
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div> <!-- край на дясната колона -->
+    </div> <!-- row -->
+</div>     <!-- container -->

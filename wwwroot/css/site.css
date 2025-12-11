@@ -46,3 +46,41 @@ body {
 footer {
     border-top: 3px solid #ff2e2e;
 }
+
+.sidebar-section-title {
+    font-weight: 600;
+    color: #d50000;
+    margin-bottom: 10px;
+}
+
+.brand-list {
+    padding-left: 0;
+    margin: 0;
+}
+
+.brand-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    padding: 2px 0;
+}
+
+    .brand-item a {
+        text-decoration: none;
+        color: #222;
+    }
+
+        .brand-item a:hover {
+            text-decoration: underline;
+        }
+
+.brand-label {
+    flex: 1; /* прави всички имена равна ширина */
+}
+
+.brand-badge {
+    margin-left: 8px; /* малко място преди бройката */
+}
+
+

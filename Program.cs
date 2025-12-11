@@ -22,11 +22,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 4;
+
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireDigit = false;
     options.Password.RequireNonAlphanumeric = false;
+
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
@@ -58,6 +60,20 @@ app.MapControllerRoute(
 // ✅ 7. Map-ваме Razor Pages (сега няма да гърми)
 app.MapRazorPages();
 
-RealProductSeed.Seed(app.Services);
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    await RealProductSeed.Seed(services);
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    await SeedData.Initialize(services);
+}
+
+
 
 app.Run();

@@ -35,30 +35,48 @@ public class CartController : Controller
 
     public async Task<IActionResult> Add(int productId)
     {
+        var productExists = await _ctx.Products.AnyAsync(p => p.Id == productId);
+        if (!productExists)
+        {
+            TempData["Error"] = "Избраният продукт не съществува.";
+            return RedirectToAction("Index", "Products");
+        }
+
         var userId = _userManager.GetUserId(User)!;
+
         var existing = await _ctx.CartItems
             .FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
 
-        if (existing != null) existing.Quantity++;
-        else _ctx.CartItems.Add(new CartItem { UserId = userId, ProductId = productId, Quantity = 1 });
+        if (existing != null)
+            existing.Quantity++;
+        else
+            _ctx.CartItems.Add(new CartItem
+            {
+                UserId = userId,
+                ProductId = productId,
+                Quantity = 1
+            });
 
         await _ctx.SaveChangesAsync();
         return RedirectToAction("Index");
     }
 
-    public async Task<IActionResult> Remove(int productId)
+
+    [HttpPost]
+    public async Task<IActionResult> Remove(int id)
     {
-        var userId = _userManager.GetUserId(User)!;
-        var item = await _ctx.CartItems
-            .FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
+        var item = await _ctx.CartItems.FindAsync(id);
 
         if (item != null)
         {
             _ctx.CartItems.Remove(item);
             await _ctx.SaveChangesAsync();
         }
+
         return RedirectToAction("Index");
     }
+
+
 
 
     // GET
@@ -103,6 +121,25 @@ public class CartController : Controller
 
         return RedirectToAction("Success");
     }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateQuantity(int itemId, int quantity)
+    {
+        var item = await _ctx.CartItems.Include(c => c.Product).FirstOrDefaultAsync(c => c.Id == itemId);
+
+        if (item == null)
+            return NotFound();
+
+        if (quantity < 1) quantity = 1;
+        if (quantity > 10) quantity = 10;
+
+        item.Quantity = quantity;
+        await _ctx.SaveChangesAsync();
+
+        return RedirectToAction("Index");
+    }
+
+
 
     // GET
     [AllowAnonymous]
